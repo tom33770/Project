@@ -1,0 +1,11 @@
+college project on laravel
+
+ project features:
+1.user can perform a crud operation 
+  i. User can create a post.
+  ii. User can Edit the post
+  iii. user can delete a post. 
+2.Authorization and Authentication
+3.Admin has full access .
+ i.admin can delete any user and post inside of database. 
+
