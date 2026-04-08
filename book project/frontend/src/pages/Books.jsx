@@ -74,9 +74,10 @@ export default function Books() {
           <article key={book.id} className="book-card">
             <h2>{book.title}</h2>
             <p className="book-author">{book.author}</p>
+            {book.genre && <p className="book-genre">Genre: {book.genre}</p>}
             <p>{book.description}</p>
             <div className="book-meta">
-              <span>${book.price}</span>
+              <span>Nrs{book.price}</span>
               <span>{book.stock} in stock</span>
             </div>
             <button type="button" className="button" onClick={() => handleAddToCart(book.id)}>

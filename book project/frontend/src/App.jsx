@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
 import Home from './pages/Home';
 import Books from './pages/Books';
@@ -9,6 +10,7 @@ import Orders from './pages/Orders';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AdminPanel from './pages/AdminPanel';
+import Profile from './pages/Profile';
 import { useAuth } from './context/AuthContext';
 
 function PrivateRoute({ children }) {
@@ -40,9 +42,11 @@ function App() {
             <Route path="/orders" element={<PrivateRoute><Orders /></PrivateRoute>} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
             <Route path="/admin" element={<AdminRoute><AdminPanel /></AdminRoute>} />
           </Routes>
         </main>
+        {!isAdminPage && <Footer />}
       </div>
     </ErrorBoundary>
   );

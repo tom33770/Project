@@ -14,11 +14,13 @@ export default function Navbar() {
     <header className="navbar">
       <div className="logo">
         <Link to="/">BookStore</Link>
+        {user && <span className="navbar-greeting">Hi, {user.name}</span>}
       </div>
       <nav>
         <Link to="/books">Books</Link>
         <Link to="/cart">Cart</Link>
         {user && <Link to="/orders">Orders</Link>}
+        {user && <Link to="/profile">Profile</Link>}
         {user ? (
           <>
             {user.role === 'admin' && <Link to="/admin">Admin</Link>}

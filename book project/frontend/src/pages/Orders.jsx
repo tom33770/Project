@@ -28,7 +28,7 @@ export default function Orders() {
             <div key={order.id} className="book-card">
               <h2>Order #{order.id}</h2>
               <p>Status: {order.status}</p>
-              <p>Total: ${order.total}</p>
+              <p>Total: Nrs{order.total}</p>
               <p>Payment: {order.payment_method}</p>
               <p>{order.order_items.length} items</p>
               <ul>

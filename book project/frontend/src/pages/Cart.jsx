@@ -40,7 +40,7 @@ export default function Cart() {
                     <p>Quantity: {item.quantity}</p>
                   </div>
                   <div className="cart-item-actions">
-                    <span>${(item.book.price * item.quantity).toFixed(2)}</span>
+                    <span>Nrs{(item.book.price * item.quantity).toFixed(2)}</span>
                     <button type="button" onClick={() => handleRemove(item.id)}>
                       Remove
                     </button>
@@ -51,7 +51,7 @@ export default function Cart() {
           </div>
           {cart.items.length > 0 && (
             <div className="cart-summary">
-              <p>Total: ${cart.total.toFixed(2)}</p>
+              <p>Total: Nrs{cart.total.toFixed(2)}</p>
               <Link to="/checkout" className="button">
                 Proceed to Checkout
               </Link>

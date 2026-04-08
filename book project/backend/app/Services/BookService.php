@@ -18,7 +18,8 @@ class BookService
         foreach ($books as $book) {
             if (
                 stripos($book->title, $query) !== false ||
-                stripos($book->author, $query) !== false
+                stripos($book->author, $query) !== false ||
+                stripos($book->genre ?? '', $query) !== false
             ) {
                 $results[] = $book;
             }

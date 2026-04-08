@@ -1,33 +1,198 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# BookStore Backend API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Laravel-based REST API for the BookStore e-commerce application.
 
-## About Laravel
+## 🚀 Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **User Authentication**: Registration, login, and profile management
+- **Book Management**: CRUD operations for books
+- **Shopping Cart**: Add, update, remove items
+- **Order Processing**: Complete checkout flow
+- **Admin Panel**: User and book management
+- **Search Algorithms**: Linear search and quick sort implementations
+- **API Documentation**: RESTful endpoints
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🛠️ Technology Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Laravel**: 13.0
+- **PHP**: 8.3+
+- **Database**: MySQL/PostgreSQL
+- **Authentication**: Laravel Sanctum
+- **Testing**: PHPUnit
+- **Asset Building**: Vite + Tailwind CSS
 
-## Learning Laravel
+## 📦 Dependencies
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Production Dependencies
+- `laravel/framework`: ^13.0 - Core Laravel framework
+- `laravel/sanctum`: ^4.3 - API authentication
+- `laravel/tinker`: ^3.0 - Interactive shell
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Development Dependencies
+- `fakerphp/faker`: ^1.23 - Test data generation
+- `laravel/pail`: ^1.2.5 - Log monitoring
+- `laravel/pint`: ^1.27 - Code style fixing
+- `mockery/mockery`: ^1.6 - Mocking framework
+- `nunomaduro/collision`: ^8.6 - Error handling
+- `phpunit/phpunit`: ^12.5.12 - Testing framework
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### Frontend Dependencies (for admin assets)
+- `@tailwindcss/vite`: ^4.0.0 - Tailwind CSS integration
+- `axios`: >=1.11.0 <=1.14.0 - HTTP client
+- `concurrently`: ^9.0.1 - Run multiple commands
+- `laravel-vite-plugin`: ^3.0.0 - Laravel Vite integration
+- `tailwindcss`: ^4.0.0 - Utility-first CSS framework
+- `vite`: ^8.0.0 - Fast build tool
+
+## 🚀 Installation
+
+1. **Install PHP dependencies**:
+   ```bash
+   composer install
+   ```
+
+2. **Environment setup**:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+3. **Database configuration**:
+   - Update `.env` with your database credentials
+   - Run migrations and seeders:
+   ```bash
+   php artisan migrate --seed
+   ```
+
+4. **Install Node.js dependencies** (for admin assets):
+   ```bash
+   npm install
+   ```
+
+## 🏃 Running the Application
+
+### Development Mode
+```bash
+composer run dev
+```
+This starts Laravel server, queue worker, and Vite dev server concurrently.
+
+### Manual Setup
+```bash
+# Start Laravel server
+php artisan serve
+
+# Start queue worker (in another terminal)
+php artisan queue:work
+
+# Build/watch assets
+npm run dev
+```
+
+## 📚 API Endpoints
+
+### Authentication
+- `POST /api/register` - User registration
+- `POST /api/login` - User login
+- `POST /api/logout` - User logout
+- `GET /api/user` - Get current user
+
+### Books
+- `GET /api/books` - List books (with search/sort)
+- `GET /api/books/{id}` - Get book details
+
+### Cart
+- `GET /api/cart` - Get cart items
+- `POST /api/cart` - Add item to cart
+- `PUT /api/cart/{id}` - Update cart item
+- `DELETE /api/cart/{id}` - Remove cart item
+
+### Orders
+- `GET /api/orders` - Get user orders
+- `POST /api/checkout` - Process checkout
+
+### Admin (requires admin role)
+- `GET /api/admin/users` - List users
+- `GET /api/admin/books` - List all books
+- `POST /api/admin/books` - Create book
+- `PUT /api/admin/books/{id}` - Update book
+- `DELETE /api/admin/books/{id}` - Delete book
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+php artisan test
+
+# Run specific test
+php artisan test --filter TestName
+```
+
+## 🔧 Available Commands
+
+```bash
+# Database operations
+php artisan migrate
+php artisan migrate:rollback
+php artisan db:seed
+
+# Cache management
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+
+# Queue management
+php artisan queue:work
+php artisan queue:failed
+
+# Code quality
+./vendor/bin/pint
+```
+
+## 📁 Key Files Structure
+
+```
+backend/
+├── app/
+│   ├── Http/Controllers/     # API Controllers
+│   ├── Models/              # Eloquent Models
+│   ├── Services/            # Business Logic
+│   └── Providers/           # Service Providers
+├── database/
+│   ├── factories/           # Model Factories
+│   ├── migrations/          # Database Migrations
+│   └── seeders/             # Database Seeders
+├── routes/
+│   └── api.php              # API Routes
+├── tests/                   # Test Files
+└── config/                  # Configuration Files
+```
+
+## 🔒 Security
+
+- CSRF protection on all forms
+- Input validation and sanitization
+- Rate limiting on API endpoints
+- Secure password hashing
+- CORS configuration
+
+## 📊 Performance
+
+- Database query optimization
+- Eager loading of relationships
+- Caching strategies
+- Asset optimization
+
+## 🤝 Contributing
+
+1. Follow PSR-12 coding standards
+2. Write tests for new features
+3. Update documentation
+4. Create meaningful commit messages
+
+## 📝 License
+
+This project is part of the BookStore application and follows the same license terms.
 
 ## Agentic Development
 

@@ -15,7 +15,7 @@ export default function Login() {
 
     try {
       await login(email, password);
-      navigate('/books');
+      navigate('/');
     } catch (err) {
       setError(err?.response?.data?.message || 'Unable to login.');
     }

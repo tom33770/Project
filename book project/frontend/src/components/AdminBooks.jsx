@@ -139,6 +139,15 @@ export default function AdminBooks({ books, onRefresh }) {
               />
             </label>
             <label>
+              Genre
+              <input
+                name="genre"
+                value={form.genre}
+                onChange={handleInput}
+                placeholder="e.g. Fantasy, Mystery"
+              />
+            </label>
+            <label>
               Price
               <input
                 name="price"
@@ -187,6 +196,7 @@ export default function AdminBooks({ books, onRefresh }) {
                 <tr>
                   <th>Title</th>
                   <th>Author</th>
+                  <th>Genre</th>
                   <th>Price</th>
                   <th>Stock</th>
                   <th>Sales</th>
@@ -198,7 +208,8 @@ export default function AdminBooks({ books, onRefresh }) {
                   <tr key={book.id} className={editingId === book.id ? 'highlight' : ''}>
                     <td>{book.title}</td>
                     <td>{book.author}</td>
-                    <td>${Number(book.price).toFixed(2)}</td>
+                    <td>{book.genre || '—'}</td>
+                    <td>Nrs{Number(book.price).toFixed(2)}</td>
                     <td>{book.stock}</td>
                     <td>{book.order_items_count ?? 0}</td>
                     <td className="table-actions">

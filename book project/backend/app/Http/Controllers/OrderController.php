@@ -30,7 +30,7 @@ class OrderController extends Controller
     {
         $validated = $request->validate([
             'address' => 'required|string|max:255',
-            'payment_method' => 'required|string|in:credit_card,debit_card,paypal,bank_transfer',
+            'payment_method' => 'required|string|in:credit_card,debit_card,esewa,bank_transfer',
         ]);
 
         // Get cart items

@@ -40,7 +40,7 @@ export default function Checkout() {
             <select value={paymentMethod} onChange={(event) => setPaymentMethod(event.target.value)}>
               <option value="credit_card">Credit Card</option>
               <option value="debit_card">Debit Card</option>
-              <option value="paypal">PayPal</option>
+              <option value="esewa">Esewa</option>
               <option value="bank_transfer">Bank Transfer</option>
             </select>
           </label>
