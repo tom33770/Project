@@ -30,8 +30,18 @@ class OrderController extends Controller
     {
         $validated = $request->validate([
             'address' => 'required|string|max:255',
-            'payment_method' => 'required|string|in:credit_card,debit_card,esewa,bank_transfer',
+            'billing_address' => 'nullable|string|max:255',
+            'payment_method' => 'required|string|in:credit_card,debit_card,esewa,bank_transfer,cash_on_delivery',
+            'card_number' => 'nullable|required_if:payment_method,credit_card,debit_card|string|regex:/^\d{16}$/',
+            'expiry_date' => 'nullable|required_if:payment_method,credit_card,debit_card|string|regex:/^\d{2}\/\d{2}$/',
+            'cvv' => 'nullable|required_if:payment_method,credit_card,debit_card|string|regex:/^\d{3}$/',
         ]);
+
+        if ($validated['payment_method'] === 'esewa') {
+            return response()->json([
+                'message' => 'Use the eSewa payment flow to checkout with eSewa.',
+            ], 400);
+        }
 
         // Get cart items
         $cartItems = $request->user()->cartItems()->with('book')->get();
@@ -58,7 +68,7 @@ class OrderController extends Controller
                     'address' => $validated['address'],
                     'payment_method' => $validated['payment_method'],
                     'total' => $total,
-                    'status' => 'confirmed',
+                    'status' => $validated['payment_method'] === 'cash_on_delivery' ? 'pending' : 'confirmed',
                 ]);
 
                 // Create order items and reduce stock

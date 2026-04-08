@@ -19,6 +19,7 @@ class Order extends Model
 
     protected $casts = [
         'total' => 'decimal:2',
+        'status' => 'string',
     ];
 
     /**

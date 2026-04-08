@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../services/api';
 
 export default function Books() {
@@ -71,19 +72,21 @@ export default function Books() {
 
       <div className="books-grid">
         {books.map((book) => (
-          <article key={book.id} className="book-card">
-            <h2>{book.title}</h2>
-            <p className="book-author">{book.author}</p>
-            {book.genre && <p className="book-genre">Genre: {book.genre}</p>}
-            <p>{book.description}</p>
-            <div className="book-meta">
-              <span>Nrs{book.price}</span>
-              <span>{book.stock} in stock</span>
-            </div>
-            <button type="button" className="button" onClick={() => handleAddToCart(book.id)}>
-              Add to Cart
-            </button>
-          </article>
+          <Link key={book.id} to={`/books/${book.id}`} className="book-link">
+            <article className="book-card">
+              <h2>{book.title}</h2>
+              <p className="book-author">{book.author}</p>
+              {book.genre && <p className="book-genre">Genre: {book.genre}</p>}
+              <p>{book.description}</p>
+              <div className="book-meta">
+                <span>Nrs{book.price}</span>
+                <span>{book.stock} in stock</span>
+              </div>
+              <button type="button" className="button" onClick={(e) => { e.preventDefault(); handleAddToCart(book.id); }}>
+                Add to Cart
+              </button>
+            </article>
+          </Link>
         ))}
       </div>
     </section>

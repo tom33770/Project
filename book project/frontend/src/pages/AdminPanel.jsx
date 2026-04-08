@@ -3,6 +3,7 @@ import api from '../services/api';
 import AdminNav from '../components/AdminNav';
 import AdminBooks from '../components/AdminBooks';
 import AdminUsers from '../components/AdminUsers';
+import AdminOrders from '../components/AdminOrders';
 import { useAuth } from '../context/AuthContext';
 
 function getErrorMessage(err) {
@@ -26,6 +27,7 @@ export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState('books');
   const [books, setBooks] = useState([]);
   const [users, setUsers] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [fetchError, setFetchError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -40,13 +42,15 @@ export default function AdminPanel() {
         return;
       }
 
-      const [booksResponse, usersResponse] = await Promise.all([
+      const [booksResponse, usersResponse, ordersResponse] = await Promise.all([
         api.get('/admin/books-stats'),
         api.get('/admin/users'),
+        api.get('/admin/orders'),
       ]);
 
       setBooks(booksResponse.data.books || []);
       setUsers(usersResponse.data.users || []);
+      setOrders(ordersResponse.data.orders || []);
       setIsLoading(false);
     } catch (err) {
       console.error('Fetch error:', err);
@@ -91,6 +95,10 @@ export default function AdminPanel() {
               
               {activeTab === 'users' && (
                 <AdminUsers users={users} onRefresh={fetchAdminData} />
+              )}
+
+              {activeTab === 'orders' && (
+                <AdminOrders orders={orders} onRefresh={fetchAdminData} />
               )}
             </>
           )}

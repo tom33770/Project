@@ -30,6 +30,13 @@ export default function AdminNav({ activeTab, setActiveTab }) {
         >
           Users
         </button>
+        <button
+          type="button"
+          className={`nav-tab ${activeTab === 'orders' ? 'active' : ''}`}
+          onClick={() => setActiveTab('orders')}
+        >
+          Orders
+        </button>
         <Link to="/" className="exit-admin">Exit Admin</Link>
         <button type="button" onClick={handleLogout} className="link-button">
           Logout

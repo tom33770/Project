@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\EsewaController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Order routes
     Route::get('/orders', [OrderController::class, 'index']);
     Route::post('/checkout', [OrderController::class, 'store']);
+    Route::post('/payments/esewa/initiate', [EsewaController::class, 'initiate']);
     Route::get('/orders/{id}', [OrderController::class, 'show']);
 
     // Admin routes
@@ -48,10 +50,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/admin/users/{id}', [AdminController::class, 'updateUser']);
         Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser']);
 
-        // Admin dashboard
-        Route::get('/admin/books-stats', [AdminController::class, 'books']);
-
         // Order management
+        Route::get('/admin/orders', [AdminController::class, 'orders']);
         Route::put('/admin/orders/{id}/status', [OrderController::class, 'updateStatus']);
     });
 });
+
+// eSewa callback routes
+Route::match(['get', 'post'], '/payments/esewa/success', [EsewaController::class, 'success']);
+Route::match(['get', 'post'], '/payments/esewa/failure', [EsewaController::class, 'failure']);
