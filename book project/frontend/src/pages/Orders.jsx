@@ -30,6 +30,8 @@ export default function Orders() {
               <p>Status: {order.status}</p>
               <p>Total: Nrs{order.total}</p>
               <p>Payment: {order.payment_method}</p>
+              {order.transaction_id && <p>Transaction ID: {order.transaction_id}</p>}
+              {order.transaction_hash && <p>Transaction Hash: {order.transaction_hash}</p>}
               <p>{order.order_items.length} items</p>
               <ul>
                 {order.order_items.map((item) => (

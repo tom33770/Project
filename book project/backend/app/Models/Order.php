@@ -13,6 +13,8 @@ class Order extends Model
         'user_id',
         'address',
         'payment_method',
+        'transaction_id',
+        'transaction_hash',
         'total',
         'status',
     ];

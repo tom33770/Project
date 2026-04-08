@@ -8,6 +8,7 @@ use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class EsewaController extends Controller
 {
@@ -51,10 +52,15 @@ class EsewaController extends Controller
                 $total += $item->quantity * $item->book->price;
             }
 
+            $transactionId = 'ESEWA-' . strtoupper(Str::random(8));
+            $transactionHash = hash('sha256', $transactionId . now()->timestamp . 'esewa');
+
             $order = Order::create([
                 'user_id' => $user->id,
                 'address' => $validated['address'],
                 'payment_method' => 'esewa',
+                'transaction_id' => $transactionId,
+                'transaction_hash' => $transactionHash,
                 'total' => $total,
                 'status' => 'pending',
             ]);
@@ -113,6 +119,8 @@ class EsewaController extends Controller
         $verified = $this->verifyPayment($oid, $amt, $refId);
 
         if ($verified && abs($order->total - (float) $amt) < 0.01) {
+            $order->transaction_id = $refId;
+            $order->transaction_hash = hash('sha256', $refId . now()->timestamp . $order->id);
             $order->status = 'confirmed';
             $order->save();
 

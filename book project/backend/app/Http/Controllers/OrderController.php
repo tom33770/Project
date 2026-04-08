@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -63,10 +64,15 @@ class OrderController extends Controller
                 }
 
                 // Create order
+                $transactionId = 'TXN-' . strtoupper(Str::random(10));
+                $transactionHash = hash('sha256', $transactionId . now()->timestamp . $validated['payment_method']);
+
                 $order = Order::create([
                     'user_id' => $request->user()->id,
                     'address' => $validated['address'],
                     'payment_method' => $validated['payment_method'],
+                    'transaction_id' => $transactionId,
+                    'transaction_hash' => $transactionHash,
                     'total' => $total,
                     'status' => $validated['payment_method'] === 'cash_on_delivery' ? 'pending' : 'confirmed',
                 ]);

@@ -27,6 +27,7 @@ export default function AdminOrders({ orders, onRefresh }) {
               <th>User</th>
               <th>Total</th>
               <th>Payment Method</th>
+              <th>Transaction ID</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -38,6 +39,7 @@ export default function AdminOrders({ orders, onRefresh }) {
                 <td>{order.user.name}</td>
                 <td>Nrs {order.total}</td>
                 <td>{order.payment_method}</td>
+                <td>{order.transaction_id || '—'}</td>
                 <td>{order.status}</td>
                 <td>
                   <select
